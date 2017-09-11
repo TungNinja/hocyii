@@ -53,3 +53,19 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+
+1. Tạo migrate
++ yii migrate/cretae ten_bang
++ yii migrate -> thu thi commit vào bảng 
+
+2. Tạo authen
++ Cấu hình trong common/config/main.php
+    "authManager" => [
+        'class'=> 'yii\rbac\DbManager'
+    ]
+De cho yii hieu rang chung ta dang su dung chuc nang phan quyen
++ Thuc thi lenh
+        yii migrate --migrationpath=@yii/rbac/mrgiration
++ Chung t cthe phan quyen dung.
++ Sau khi xong thuc thi lenh
+        yii rbac/init
