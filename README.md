@@ -53,6 +53,7 @@ frontend
 vendor/                  contains dependent 3rd-party packages
 environments/            contains environment-based overrides
 ```
+Chu y: Tao model truoc khi tao CRUB Model
 
 1. Tạo migrate
 + yii migrate/cretae ten_bang
