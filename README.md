@@ -70,3 +70,65 @@ De cho yii hieu rang chung ta dang su dung chuc nang phan quyen
 + Chung t cthe phan quyen dung.
 + Sau khi xong thuc thi lenh
         yii rbac/init
+
+===================> Yii2 Scan controller and action <========================
+
+public function actionIndex()
+    {
+        $controllers = [];
+
+        foreach ($this->getAllControllers() as $controller) {
+            $className = 'www\controllers\\' . basename($controller, '.php');
+
+            $controllers[$controller] = [];
+            $methods = (new \ReflectionClass($className))->getMethods(\ReflectionMethod::IS_PUBLIC);
+            //Phalcon
+            foreach ($methods as $method) {
+                if ($this->startsWith($method->name, 'action')) {
+                    $controllers[$controller][] = $method->name;
+                }
+            }
+
+        }
+
+        var_dump( $controllers[$controller][]);die();
+        //return $this->render('index');
+    }
+
+    function startsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+        return (substr($haystack, 0, $length) === $needle);
+    }
+
+    function endsWith($haystack, $needle)
+    {
+        $length = strlen($needle);
+
+        return $length === 0 ||
+            (substr($haystack, -$length) === $needle);
+    }
+    public function getAllControllers()
+    {
+        $files = scandir('../controllers');
+        $controllers = array();
+        foreach ($files as $file) {
+            if ($controller = $this->extractController($file)) {
+                $controllers[] = $controller;
+            }
+        }
+        return $controllers;
+    }
+
+    protected function extractController($name)
+    {
+        $filename = explode('.php', $name);
+        if (count(explode('Controller.php', $name)) > 1) {
+            # code...
+            if (count($filename) > 1) {
+                return $filename[0];
+            }
+        }
+
+        return false;
+    }
